@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}My Jobs — TalentSphere Elevate{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>My job postings</h1>
+  <p><a href="{% url 'post_job' %}" style="color:var(--brass-hi);">+ Post a new job</a></p>
+</div>
+
+{% for job in jobs %}
+  <div class="item-card">
+    <div>
+      <h3>{{ job.title }}</h3>
+      <div class="meta">
+        <span>{{ job.location }}</span>
+        <span>{{ job.get_job_type_display }}</span>
+        <span>{{ job.openings }} opening{{ job.openings|pluralize }}</span>
+        <span>{{ job.applicant_count }} applicant{{ job.applicant_count|pluralize }}</span>
+        <span>{% if job.is_active %}Active{% else %}Closed{% endif %}</span>
+      </div>
+      <div class="tags">
+        {% for skill in job.skills_list|slice:":8" %}<span class="tag">{{ skill }}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="actions">
+      <a href="{% url 'job_applicants' job.id %}" class="btn-small btn-brass">View applicants</a>
+    </div>
+  </div>
+{% empty %}
+  <div class="empty-state">You haven't posted any jobs yet. <a href="{% url 'post_job' %}" style="color:var(--brass-hi);">Post your first job →</a></div>
+{% endfor %}
+{% endblock %}

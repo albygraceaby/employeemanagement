@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Bulk Analysis — {{ job.title }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Bulk AI analysis</h1>
+  <p>Analyzed {{ analyzed }} of {{ total }} applicant{{ total|pluralize }} for "{{ job.title }}".</p>
+</div>
+
+<div class="section">
+  {% for item in results %}
+  <div class="item-card">
+    <div style="width:100%;">
+      <h3>#{{ forloop.counter }} — {{ item.application.candidate.candidate_profile.full_name }}</h3>
+      <div class="meta">
+        <span>Overall: {{ item.result.overall_match }}%</span>
+        <span>Skill: {{ item.result.skill_match }}%</span>
+        <span>Experience: {{ item.result.experience_match }}%</span>
+        <span>Status: {{ item.application.get_status_display }}</span>
+      </div>
+      <p class="meta" style="margin-top:6px;">{{ item.application.ai_recommendation }}</p>
+    </div>
+    <div class="actions">
+      <a href="{% url 'analyze_application' job.id item.application.id %}" class="btn-small">Details</a>
+    </div>
+  </div>
+  {% empty %}
+    <div class="empty-state">No applicants with a completed profile to analyze.</div>
+  {% endfor %}
+</div>
+
+<div class="form-actions" style="margin-top:16px;">
+  <a href="{% url 'job_applicants' job.id %}" class="btn-small">Back to applicants</a>
+</div>
+{% endblock %}

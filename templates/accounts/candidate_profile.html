@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}Candidate Profile — TalentSphere Elevate{% endblock %}
+{% block page %}profile{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Candidate profile</h1>
+  <p>Complete every field so recruiters get the full picture — this doubles as your live resume.</p>
+</div>
+
+<div class="form-card">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+
+    <div class="section-title" style="margin-top:0;">Basic details</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="{{ form.full_name.id_for_label }}">Full name</label>
+        {{ form.full_name }}
+        <ul class="errorlist">{% for e in form.full_name.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        <ul class="errorlist">{% for e in form.email.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.date_of_birth.id_for_label }}">Date of birth</label>
+        {{ form.date_of_birth }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.location.id_for_label }}">Current location</label>
+        {{ form.location }}
+      </div>
+    </div>
+
+    <div class="section-title">Education</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="{{ form.highest_qualification.id_for_label }}">Highest qualification</label>
+        {{ form.highest_qualification }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.university.id_for_label }}">University / College</label>
+        {{ form.university }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.graduation_year.id_for_label }}">Graduation year</label>
+        {{ form.graduation_year }}
+      </div>
+    </div>
+
+    <div class="section-title">Experience</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="{{ form.experience_years.id_for_label }}">Experience (years)</label>
+        {{ form.experience_years }}
+        <ul class="errorlist">{% for e in form.experience_years.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.current_company.id_for_label }}">Current company</label>
+        {{ form.current_company }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.current_designation.id_for_label }}">Current designation</label>
+        {{ form.current_designation }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.expected_salary.id_for_label }}">Expected annual salary</label>
+        {{ form.expected_salary }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.notice_period_days.id_for_label }}">Notice period (days)</label>
+        {{ form.notice_period_days }}
+      </div>
+    </div>
+
+    <div class="section-title">Skills &amp; projects</div>
+    <div class="form-grid">
+      <div class="form-field full">
+        <label for="{{ form.skills.id_for_label }}">Skills</label>
+        {{ form.skills }}
+        <ul class="errorlist">{% for e in form.skills.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.projects.id_for_label }}">Key projects</label>
+        {{ form.projects }}
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.professional_summary.id_for_label }}">Professional summary</label>
+        {{ form.professional_summary }}
+      </div>
+    </div>
+
+    <div class="section-title">Links &amp; resume</div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="{{ form.linkedin_url.id_for_label }}">LinkedIn URL</label>
+        {{ form.linkedin_url }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.github_url.id_for_label }}">GitHub URL</label>
+        {{ form.github_url }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.portfolio_url.id_for_label }}">Portfolio URL</label>
+        {{ form.portfolio_url }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.resume.id_for_label }}">Resume (PDF/DOCX, max 5MB)</label>
+        {{ form.resume }}
+        <div class="hint" style="margin-top:6px;">Accepted formats: PDF or DOCX · Maximum size: 5 MB</div>
+        {% if profile.resume %}<div class="hint" style="margin-top:6px;">Current: <a href="{{ profile.resume.url }}" style="color:var(--brass-hi);">{{ profile.resume.name }}</a></div>{% endif %}
+        <ul class="errorlist">{% for e in form.resume.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-small btn-brass">Save profile</button>
+      <a href="{% url 'dashboard' %}" class="btn-small">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

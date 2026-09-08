@@ -1,0 +1,14 @@
+{% extends "interviews/base.html" %}
+{% block title %}Schedule Interview — TalentSphere Elevate{% endblock %}
+{% block interview_content %}
+<div class="section">
+  <div class="section-title">Schedule an Interview</div>
+  <div class="item-card">
+    <form method="post" style="display:grid; gap:12px; max-width:760px;">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn-small btn-brass" type="submit">Schedule & Send Email</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

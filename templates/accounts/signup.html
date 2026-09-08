@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Create your account — TalentSphere Elevate</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+<body data-page="signup">
+
+<div class="shell">
+
+  <!-- Brand side -->
+  <div class="brandside">
+    <div class="brand-mark">
+      <div class="glyph">TE</div>
+      <span class="name">TalentSphere <b>Elevate</b></span>
+    </div>
+
+    <div class="brand-copy">
+      <div class="eyebrow">Verified talent, from day one</div>
+      <h1>Every account climbs through real verification.</h1>
+    </div>
+  </div>
+
+  <!-- Form side -->
+  <div class="formside">
+    <div class="panel">
+
+      <div class="role-tabs">
+        <button type="button" class="role-tab {% if role == 'candidate' %}active{% endif %}" data-role="candidate">I'm a Candidate</button>
+        <button type="button" class="role-tab {% if role == 'recruiter' %}active{% endif %}" data-role="recruiter">I'm a Recruiter</button>
+      </div>
+
+      <div class="panel-head">
+        <h2>Create your account</h2>
+        <p>Already elevated? <a href="{% url 'login' %}">Sign in instead</a></p>
+      </div>
+
+      <div class="card-dock">
+        <div class="card">
+          <form id="authForm" method="post" novalidate>
+            {% csrf_token %}
+            {{ form.role }}
+
+            <div class="field">
+              <label for="username">Username</label>
+              <div class="input-wrap">
+                <input type="text" id="username" name="username" placeholder="e.g. sravani.k" autocomplete="username" value="{{ form.username.value|default:'' }}" />
+              </div>
+              <div class="hint" id="usernameHint"></div>
+              {% for error in form.username.errors %}<div class="hint error">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <div class="input-wrap">
+                <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" value="{{ form.email.value|default:'' }}" />
+              </div>
+              <div class="hint" id="emailHint"></div>
+              {% for error in form.email.errors %}<div class="hint error">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <div class="input-wrap">
+                <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10" autocomplete="tel" value="{{ form.phone.value|default:'' }}" />
+              </div>
+              <div class="hint" id="phoneHint">Exactly 10 digits — no country code needed.</div>
+              {% for error in form.phone.errors %}<div class="hint error">{{ error }}</div>{% endfor %}
+            </div>
+
+            <div class="two-col">
+              <div class="field">
+                <label for="password">Password</label>
+                <div class="input-wrap">
+                  <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" />
+                  <button type="button" class="toggle-visibility" data-target="password">SHOW</button>
+                </div>
+                <div class="strength-track"><div class="strength-fill" id="strengthFill"></div></div>
+                <div class="hint" id="passwordHint"></div>
+                {% for error in form.password.errors %}<div class="hint error">{{ error }}</div>{% endfor %}
+              </div>
+
+              <div class="field">
+                <label for="confirmPassword">Confirm password</label>
+                <div class="input-wrap">
+                  <input type="password" id="confirmPassword" name="confirm_password" placeholder="Re-enter password" autocomplete="new-password" />
+                  <button type="button" class="toggle-visibility" data-target="confirmPassword">SHOW</button>
+                </div>
+                <div class="hint" id="confirmHint"></div>
+                {% for error in form.confirm_password.errors %}<div class="hint error">{{ error }}</div>{% endfor %}
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Security check</label>
+              <div class="captcha-box">
+                <span class="captcha-equation" id="captchaEquation">— + — = ?</span>
+                <input type="text" id="captchaInput" placeholder="Answer" inputmode="numeric" />
+                <button type="button" class="captcha-refresh" id="captchaRefresh" title="New equation">⟳</button>
+              </div>
+              <div class="hint" id="captchaHint"></div>
+            </div>
+
+            <div class="field">
+              <label>Human verification</label>
+              <div class="slide-verify" id="slideVerify">
+                <div class="track-fill" id="slideFill"></div>
+                <span class="track-label" id="slideLabel">Slide to verify you're human →</span>
+                <div class="handle" id="slideHandle">➜</div>
+              </div>
+            </div>
+
+            <label class="check-row">
+              <input type="checkbox" id="agreeTerms" required />
+              <span>I confirm the details above are accurate and I agree to TalentSphere Elevate's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+            </label>
+
+            <button type="submit" class="btn-elevate" id="submitBtn" disabled>Create account</button>
+          </form>
+        </div>
+
+        <div>
+          <div class="elevation-meter" style="height: calc(100% - 20px);">
+            <div class="fill" id="meterFill"></div>
+          </div>
+          <div class="elevation-label">Trust</div>
+        </div>
+      </div>
+
+      <div class="foot-link">Your profile (skills, resume, experience) is completed right after you sign up.</div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="{% static 'js/auth.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Applicants — {{ job.title }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Applicants for "{{ job.title }}"</h1>
+  <p>{{ applications.count }} candidate{{ applications.count|pluralize }} applied.</p>
+</div>
+
+<div class="form-actions" style="margin-bottom:14px;">
+  <a href="{% url 'rank_job_applications' job.id %}" class="btn-small">AI ranked view</a>
+  <a href="{% url 'bulk_analyze_applications' job.id %}" class="btn-small btn-brass">Bulk analyze all</a>
+</div>
+
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Candidate</th>
+        <th>Experience</th>
+        <th>Skills</th>
+        <th>Cover note</th>
+        <th>Applied</th>
+        <th>AI match</th>
+        <th>Status &amp; notes</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in applications %}
+      <tr>
+        <td>
+          <a href="{% url 'view_candidate_profile' app.candidate.id %}" style="color:var(--text-hi); text-decoration:none;">
+            {{ app.candidate.candidate_profile.full_name|default:app.candidate.username }}
+          </a>
+        </td>
+        <td>{{ app.candidate.candidate_profile.experience_years|default:"—" }} yrs</td>
+        <td>
+          {% for skill in app.candidate.candidate_profile.skills_list|slice:":4" %}<span class="tag">{{ skill }}</span>{% endfor %}
+        </td>
+        <td style="max-width:200px;">{{ app.cover_note|default:"—"|truncatechars:80 }}</td>
+        <td>{{ app.applied_at|date:"M j, Y" }}</td>
+        <td>
+          {% if app.match_score is not None %}
+            <strong>{{ app.match_score }}%</strong><br><span class="meta">{{ app.ai_recommendation }}</span>
+          {% else %}
+            <span class="meta">Not analyzed</span>
+          {% endif %}
+          <br><a href="{% url 'analyze_application' job.id app.id %}" class="btn-small" style="margin-top:4px;display:inline-block;">Analyze</a>
+        </td>
+        <td>
+          <span class="badge badge-{{ app.status }}">{{ app.get_status_display }}</span>
+          <form method="post" style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+            {% csrf_token %}
+            <input type="hidden" name="application_id" value="{{ app.id }}" />
+            <select name="status">
+              {% for value, label in app.Status.choices %}
+                <option value="{{ value }}" {% if app.status == value %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+            <textarea name="notes" rows="2" placeholder="Private notes...">{{ app.notes }}</textarea>
+            <button type="submit" class="btn-small">Save</button>
+          </form>
+        </td>
+        <td>
+          {% if app.candidate.candidate_profile.resume %}<a href="{{ app.candidate.candidate_profile.resume.url }}" class="btn-small">Resume</a>{% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="8" class="empty-state">No applicants yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

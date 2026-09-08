@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Candidate Dashboard — TalentSphere Elevate{% endblock %}
+{% block page %}dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Welcome back, {{ request.user.username }}</h1>
+  <p>Track your applications and discover new openings.</p>
+</div>
+
+
+<div class="section">
+  <div class="section-title">Your candidate profile</div>
+  <div class="item-card">
+    <div>
+      <h3>{{ request.user.candidate_profile.full_name }}</h3>
+      <div class="meta">
+        <span>{{ request.user.candidate_profile.experience_years }} years experience</span>
+        <span>{{ request.user.candidate_profile.skills_list|length }} skills</span>
+        {% if request.user.candidate_profile.current_designation %}
+          <span>{{ request.user.candidate_profile.current_designation }}</span>
+        {% endif %}
+      </div>
+      <p>{{ request.user.candidate_profile.professional_summary|default:"Complete your profile with skills, experience and projects."|truncatewords:24 }}</p>
+    </div>
+    <div class="actions">
+      <a href="{% url 'candidate_profile' %}" class="btn-small btn-brass">View Profile</a>
+      <a href="{% url 'edit_profile' %}" class="btn-small">Edit</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Smart job matching</div>
+  <div class="item-card">
+    <div>
+      <h3>Find jobs that match your skills</h3>
+      <div class="meta">
+        <span>Matching skills</span>
+        <span>Missing skills</span>
+        <span>Match percentage</span>
+      </div>
+    </div>
+    <div class="actions">
+      <a href="{% url 'matching-home' %}" class="btn-small btn-brass">View Job Matches</a>
+    </div>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ total_jobs_applied }}</div>
+    <div class="stat-label">Total Jobs Applied</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ applied_count }}</div>
+    <div class="stat-label">Applied</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ shortlisted_count }}</div>
+    <div class="stat-label">Shortlisted</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ interviewed_count }}</div>
+    <div class="stat-label">Interviewed</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ selected_count }}</div>
+    <div class="stat-label">Selected</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ rejected_count }}</div>
+    <div class="stat-label">Rejected</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ open_jobs_count }}</div>
+    <div class="stat-label">Open job openings</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Your applications</div>
+  {% for app in applications %}
+    <div class="item-card">
+      <div>
+        <h3>{{ app.job.title }}</h3>
+        <div class="meta">
+          <span>{{ app.job.location }}</span>
+          <span>{{ app.job.get_job_type_display }}</span>
+          <span>Applied {{ app.applied_at|date:"M j, Y" }}</span>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="badge badge-{{ app.status }}">{{ app.get_status_display }}</span>
+      </div>
+    </div>
+  {% empty %}
+    <div class="empty-state">You haven't applied to any jobs yet. <a href="{% url 'job_list' %}" style="color:var(--brass-hi);">Browse open jobs →</a></div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}AI Candidate Recommendations — TalentSphere Elevate{% endblock %}
+{% block page %}matching{% endblock %}
+{% block content %}
+
+<div class="match-page-head">
+  <div>
+    <div class="match-eyebrow">TalentSphere Elevate · Smart Matching</div>
+    <h1>AI Candidate Recommendations</h1>
+    <p>Applicants across your job postings, ranked by skill, experience and keyword fit.</p>
+  </div>
+  <a href="{% url 'candidates_list' %}" class="btn-small">Browse Candidates</a>
+</div>
+
+<div class="match-summary">
+  <div>
+    <span class="summary-number">{{ recommended|length }}</span>
+    <span>Recommended candidates</span>
+  </div>
+  <div>
+    <span class="summary-number">{{ jobs|length }}</span>
+    <span>Job postings</span>
+  </div>
+  <div>
+    <span class="summary-number">AI</span>
+    <span>Explainable scoring</span>
+  </div>
+</div>
+
+<div class="match-list-head">
+  <div>
+    <h2>Filter by job</h2>
+    <p>Narrow recommendations down to one posting, or view every applicant ranked together.</p>
+  </div>
+</div>
+
+<form method="get" class="item-card" style="margin-bottom:28px;">
+  <div style="flex:1;">
+    <select name="job" style="min-width:280px;" onchange="this.form.submit()">
+      <option value="">All job postings</option>
+      {% for job in jobs %}
+        <option value="{{ job.id }}" {% if job_filter == job.id|stringformat:"s" %}selected{% endif %}>{{ job.title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="actions">
+    <button type="submit" class="btn-small btn-brass">Apply Filter</button>
+  </div>
+</form>
+
+{% for item in recommended %}
+  <article class="match-card">
+    <div class="match-card-top">
+      <div>
+        <div class="match-rank">RECOMMENDATION #{{ forloop.counter }}</div>
+        <h2>{{ item.profile.full_name }}</h2>
+        <div class="match-meta">
+          <span>Applied for {{ item.job.title }}</span>
+          <span>{{ item.profile.experience_years }} yrs experience</span>
+          {% if item.profile.current_designation %}<span>{{ item.profile.current_designation }}</span>{% endif %}
+          {% if item.profile.location %}<span>{{ item.profile.location }}</span>{% endif %}
+        </div>
+      </div>
+      <div class="match-result-badge {% if item.match.overall_match >= 80 %}excellent{% elif item.match.overall_match >= 60 %}good{% elif item.match.overall_match >= 40 %}potential{% else %}low{% endif %}">
+        {{ item.match.recommendation_label }}
+      </div>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-card score-overall">
+        <span class="score-label">Overall Match</span>
+        <strong>{{ item.match.overall_match }}%</strong>
+      </div>
+      <div class="score-card score-skill">
+        <span class="score-label">Skill Match</span>
+        <strong>{{ item.match.skill_match }}%</strong>
+      </div>
+      <div class="score-card score-experience">
+        <span class="score-label">Experience Match</span>
+        <strong>{{ item.match.experience_match }}%</strong>
+      </div>
+      <div class="score-card score-keyword">
+        <span class="score-label">Keyword Match</span>
+        <strong>{{ item.match.keyword_match }}%</strong>
+      </div>
+    </div>
+
+    <div class="ai-recommendation">
+      <div class="ai-title">AI Recommendation</div>
+      <div>{{ item.match.recommendation }}</div>
+    </div>
+
+    <div class="match-skill-summary">
+      <div>
+        <strong>Matching skills</strong>
+        {% for skill in item.match.matching_skills %}
+          <span class="tag tag-match">{{ skill }}</span>
+        {% empty %}
+          <span class="muted-text">None</span>
+        {% endfor %}
+      </div>
+      <div>
+        <strong>Missing skills</strong>
+        {% for skill in item.match.missing_skills %}
+          <span class="tag tag-missing">{{ skill }}</span>
+        {% empty %}
+          <span class="muted-text">None — all required skills match.</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="match-card-actions">
+      <span class="badge badge-{{ item.application.status }}">{{ item.application.get_status_display }}</span>
+      <a href="{% url 'job_applicants' item.job.id %}" class="btn-small btn-brass">Review in ATS</a>
+    </div>
+  </article>
+{% empty %}
+  <div class="empty-state">
+    No applicants to recommend yet. Once candidates apply to your job postings, they'll be ranked here automatically.
+  </div>
+{% endfor %}
+
+{% if page_obj and page_obj.has_other_pages %}
+<div class="pagination" style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:24px; padding:12px;">
+  {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">← Previous</a>
+  {% endif %}
+  <span style="font-size:14px; font-weight:600;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">Next →</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+

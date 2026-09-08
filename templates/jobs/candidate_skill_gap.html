@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Skill Gap Analysis — {{ job.title }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Skill Gap Analysis & Upskilling Path</h1>
+  <p>Detailed analysis of your skills versus <strong>{{ job.title }}</strong> requirements.</p>
+</div>
+
+<div class="item-card" style="width:100%; display:block;">
+  <div style="width:100%;">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; border-bottom: 1px solid var(--border-color, #e0e0e0); padding-bottom: 12px; margin-bottom: 16px;">
+      <div>
+        <h2 style="margin:0;">Skill Fit Score: <span style="color: {% if result.match_percentage >= 80 %}#2e7d32{% elif result.match_percentage >= 50 %}#ed6c02{% else %}#d32f2f{% endif %};">{{ result.match_percentage }}%</span></h2>
+        <p class="meta" style="margin-top:4px;">{{ result.match_score }} of {{ result.required_skill_count }} required skills match your current profile.</p>
+      </div>
+      {% if result.missing_skills %}
+      <a href="{% url 'candidate_learning_path' job.id %}" class="btn" style="background: var(--brass-hi, #2563eb); color:#fff; font-weight:600; padding:10px 18px; border-radius:6px; text-decoration:none;">
+        🚀 Personalised Learning Path
+      </a>
+      {% endif %}
+    </div>
+
+    <!-- Category Breakdown -->
+    {% if result.category_breakdown %}
+    <div style="margin-bottom: 20px;">
+      <strong style="display:block; margin-bottom:8px;">Domain Skill Breakdown:</strong>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+        {% for cat, data in result.category_breakdown.items %}
+        <div style="background:var(--card-bg, #f8fafc); padding:10px 14px; border-radius:6px; border:1px solid rgba(0,0,0,0.08);">
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
+            <span>{{ cat }}</span>
+            <span>{{ data.matched }}/{{ data.total }} ({{ data.percentage }}%)</span>
+          </div>
+          <div style="background:#e2e8f0; height:6px; border-radius:3px; margin-top:6px; overflow:hidden;">
+            <div style="background: {% if data.percentage >= 75 %}#22c55e{% elif data.percentage >= 40 %}#f59e0b{% else %}#ef4444{% endif %}; height:100%; width:{{ data.percentage }}%;"></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div style="margin-top:16px;">
+      <strong>Skills from your profile / resume:</strong><br>
+      <div style="margin-top:6px;">
+        {% for skill in profile.skills_list %}
+          <span class="tag" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">{{ skill }}</span>
+        {% empty %}
+          <span class="meta">No skills were extracted from your profile/resume yet.</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <strong>Matching Skills:</strong><br>
+      <div style="margin-top:6px;">
+        {% for skill in result.matching_skills %}
+          <span class="tag" style="background:#dcfce7; color:#15803d; border:1px solid #bbf7d0;">✓ {{ skill }}</span>
+        {% empty %}
+          <span class="meta">None matched yet.</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div style="margin-top:18px;">
+      <strong style="color:#b91c1c;">Missing Skills Identified ({{ result.missing_skills|length }}):</strong><br>
+      <div style="margin-top:8px; display:flex; flex-wrap:wrap; gap:8px;">
+        {% for item in result.missing_skills_detailed %}
+          <div style="display:inline-flex; align-items:center; background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:4px 10px; font-size:13px;">
+            <span style="font-weight:600; color:#991b1b; margin-right:6px;">{{ item.name }}</span>
+            <span style="font-size:11px; padding:2px 6px; border-radius:4px; font-weight:600; {% if item.criticality == 'Critical Core' %}background:#fee2e2; color:#b91c1c;{% else %}background:#f3f4f6; color:#4b5563;{% endif %}">
+              {{ item.criticality }}
+            </span>
+          </div>
+        {% empty %}
+          <span class="meta" style="color:#15803d; font-weight:600;">🎉 None! You match all identified requirements for this job.</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <p class="meta" style="margin-top:20px; font-size:12px;">
+      Deterministic AI analysis matches canonical skills extracted from your resume against job title, description, and responsibilities.
+    </p>
+  </div>
+</div>
+
+<div class="form-actions" style="margin-top:20px; display:flex; gap:12px;">
+  {% if result.missing_skills %}
+  <a href="{% url 'candidate_learning_path' job.id %}" class="btn-small" style="background:var(--brass-hi, #2563eb); color:#fff;">View Personalised Learning Roadmap</a>
+  {% endif %}
+  <a href="{% url 'matching-home' %}" class="btn-small">Back to Matches</a>
+  <a href="{% url 'candidate_profile' %}" class="btn-small">Update Skills Profile</a>
+</div>
+{% endblock %}
+

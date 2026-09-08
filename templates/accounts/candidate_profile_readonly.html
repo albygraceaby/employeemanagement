@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.full_name }} — Candidate Profile{% endblock %}
+{% block page %}profile{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>{{ profile.full_name }}</h1>
+  <p>{{ profile.current_designation }}{% if profile.current_company %} at {{ profile.current_company }}{% endif %}</p>
+</div>
+
+<div class="form-card">
+  <div class="section">
+    <div class="section-title" style="margin-top:0;">Contact</div>
+    <p>Email: {{ profile.email }}</p>
+    <p>Location: {{ profile.location|default:"—" }}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Experience</div>
+    <p>{{ profile.experience_years }} years{% if profile.expected_salary %} · Expects ₹{{ profile.expected_salary }}/yr{% endif %}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Education</div>
+    <p>{{ profile.get_highest_qualification_display|default:"—" }}{% if profile.university %} — {{ profile.university }}{% endif %}{% if profile.graduation_year %} ({{ profile.graduation_year }}){% endif %}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Skills</div>
+    <div class="tags">
+      {% for skill in profile.skills_list %}<span class="tag">{{ skill }}</span>{% empty %}<span class="empty-state">No skills listed yet.</span>{% endfor %}
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Projects</div>
+    <p>{{ profile.projects|default:"—"|linebreaks }}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Summary</div>
+    <p>{{ profile.professional_summary|default:"—"|linebreaks }}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Links</div>
+    <p>
+      {% if profile.resume %}<a href="{{ profile.resume.url }}" class="btn-small btn-brass" style="margin-right:8px;">View / Download Resume</a>{% else %}<span class="meta">No resume uploaded.</span>{% endif %}
+      {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" class="btn-small" style="margin-right:8px;">LinkedIn</a>{% endif %}
+      {% if profile.github_url %}<a href="{{ profile.github_url }}" class="btn-small" style="margin-right:8px;">GitHub</a>{% endif %}
+      {% if profile.portfolio_url %}<a href="{{ profile.portfolio_url }}" class="btn-small">Portfolio</a>{% endif %}
+    </p>
+  </div>
+
+  <a href="{% url 'candidates_list' %}" class="btn-small">← Back to candidates</a>
+</div>
+{% endblock %}

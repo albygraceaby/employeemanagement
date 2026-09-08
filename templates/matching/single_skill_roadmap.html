@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ roadmap.skill_name }} Learning Roadmap — TalentSphere{% endblock %}
+{% block page %}matching{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Skill Roadmap: {{ roadmap.skill_name }}</h1>
+  <p>Detailed learning roadmap, curated resources, and practical project for mastering <strong>{{ roadmap.skill_name }}</strong>.</p>
+</div>
+
+<div class="item-card" style="width:100%; display:block; border-radius:10px;">
+  <div style="padding:10px 0; border-bottom:1px solid #e2e8f0; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+    <div>
+      <span style="font-size:12px; background:#e0f2fe; color:#0369a1; padding:3px 10px; border-radius:12px; font-weight:600;">{{ roadmap.category }}</span>
+      <span style="font-size:12px; padding:3px 10px; border-radius:12px; font-weight:700; margin-left:6px; {% if roadmap.criticality == 'Critical Core' %}background:#fee2e2; color:#991b1b;{% else %}background:#f1f5f9; color:#475569;{% endif %}">
+        {{ roadmap.criticality }}
+      </span>
+    </div>
+    <div style="font-size:13px; font-weight:600; color:#475569;">
+      ⏱ Est. Time: ~{{ roadmap.estimated_hours }} Hours ({{ roadmap.difficulty }})
+    </div>
+  </div>
+
+  <p style="font-size:15px; color:#334155; line-height:1.5;">{{ roadmap.description }}</p>
+
+  <h4 style="margin-top:20px; font-size:15px;">🎯 Step-by-Step Learning Milestones</h4>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-bottom: 20px;">
+    {% for milestone in roadmap.milestones %}
+    <div style="background:var(--card-bg, #ffffff); border:1px solid rgba(0,0,0,0.08); border-left: 4px solid {% if milestone.step == 1 %}#3b82f6{% elif milestone.step == 2 %}#8b5cf6{% else %}#10b981{% endif %}; padding:12px 16px; border-radius:6px;">
+      <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Phase {{ milestone.step }}</span>
+      <h5 style="margin:4px 0; font-size:14px; color:#0f172a;">{{ milestone.title }}</h5>
+      <p style="margin:0; font-size:12px; color:#475569; line-height:1.4;">{{ milestone.details }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <h4 style="margin-top:20px; font-size:15px;">📚 Curated Learning Resources</h4>
+  <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+    {% for res in roadmap.resources %}
+    <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:6px; text-decoration:none; color:#1e293b; border:1px solid #e2e8f0;">
+      <span style="font-size:13px; font-weight:600;">📖 {{ res.title }}</span>
+      <span style="font-size:12px; color:#2563eb;">Open Resource ↗</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if roadmap.project_idea %}
+  <div style="background:#f0fdf4; border:1px dashed #86efac; padding:14px 18px; border-radius:8px;">
+    <strong style="color:#166534; font-size:14px; display:block;">💡 Hands-On Portfolio Project Idea:</strong>
+    <p style="margin:4px 0 0 0; font-size:13px; color:#15803d; line-height:1.4;">{{ roadmap.project_idea }}</p>
+  </div>
+  {% endif %}
+</div>
+
+<div class="form-actions" style="margin-top:20px;">
+  <a href="{% url 'matching-home' %}" class="btn-small">Back to Job Matches</a>
+</div>
+{% endblock %}
