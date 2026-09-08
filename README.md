@@ -12,7 +12,7 @@ The platform also includes **resume extraction, skill-based job matching, ATS-st
 
 ## 2. Current Project Features
 
-### 👤 Authentication & Role Management
+###  Authentication & Role Management
 
 * Candidate and Recruiter registration
 * Login and logout
@@ -22,7 +22,7 @@ The platform also includes **resume extraction, skill-based job matching, ATS-st
 * JWT-based authentication
 * 10-digit phone number validation
 
-### 👨‍💼 Recruiter Features
+###  Recruiter Features
 
 * Recruiter profile management
 * Create and manage job postings
@@ -32,7 +32,7 @@ The platform also includes **resume extraction, skill-based job matching, ATS-st
 * Update application status
 * Recruiter analytics and metrics
 
-### 👨‍🎓 Candidate Features
+###  Candidate Features
 
 * Candidate profile management
 * Add skills, education, experience and projects
@@ -43,7 +43,7 @@ The platform also includes **resume extraction, skill-based job matching, ATS-st
 * View matching information
 * Identify missing skills and skill gaps
 
-### 📄 Resume Processing
+###  Resume Processing
 
 * PDF resume upload
 * DOCX resume upload
@@ -54,7 +54,7 @@ The platform also includes **resume extraction, skill-based job matching, ATS-st
 * Project information extraction
 * File validation and upload size restrictions
 
-### 🎯 Job & Candidate Matching
+###  Job & Candidate Matching
 
 TalentSphere uses an explainable matching system to compare candidate profiles with job requirements.
 
@@ -66,7 +66,7 @@ TalentSphere uses an explainable matching system to compare candidate profiles w
 
 The system provides matching information and helps recruiters identify candidates who are better suited for a particular job.
 
-### 📊 ATS Candidate Ranking
+###  ATS Candidate Ranking
 
 * Candidate priority/ranking
 * Skill-based ranking
@@ -75,7 +75,7 @@ The system provides matching information and helps recruiters identify candidate
 * Minimum match-score filtering
 * Helps recruiters shortlist suitable candidates
 
-### 📈 Analytics & Metrics
+###  Analytics & Metrics
 
 * Total jobs posted
 * Total applications
@@ -85,7 +85,7 @@ The system provides matching information and helps recruiters identify candidate
 * Weekly activity visualization
 * Dashboard charts using Chart.js
 
-### 🔐 Security & Reliability
+###  Security & Reliability
 
 * JWT authentication
 * Secure architecture
@@ -96,14 +96,14 @@ The system provides matching information and helps recruiters identify candidate
 * Frontend error handling
 * Invalid request/error blocking and proper error messages
 
-### 🧠 Skill Gap Analysis
+###  Skill Gap Analysis
 
 * Compare candidate skills with job-required skills
 * Identify missing skills
 * Highlight areas for improvement
 * Provide learning-path recommendations for missing skills
 
-### ⚡ Scalability
+###  Scalability
 
 * Designed with a modular Django architecture
 * Database operations handled through Django ORM
