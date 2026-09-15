@@ -1,29 +1,30 @@
 {% extends "base.html" %}
-{% block title %}Personalised Learning Path — {{ job.title }}{% endblock %}
+{% block title %}Skill Development Plan — {{ job.title }}{% endblock %}
 {% block page %}matching{% endblock %}
 {% block content %}
 <div class="page-head">
-  <h1>Personalised Learning Path</h1>
-  <p>Step-by-step upskilling roadmap designed to bridge your skill gap for <strong>{{ job.title }}</strong>.</p>
+  <div class="match-eyebrow">TalentSphere Elevate · Skill Gap & Upskilling</div>
+  <h1>Skill Development Plan</h1>
+  <p>Personalised Learning Path designed to prepare you for <strong>{{ job.title }}</strong>.</p>
 </div>
 
 <!-- Overview Stats Banner -->
-<div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color:#fff; padding: 24px; border-radius:12px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+<div class="roadmap-hero">
+  <div class="roadmap-hero-inner">
     <div>
-      <span style="text-transform:uppercase; letter-spacing:1px; font-size:12px; color:#94a3b8; font-weight:700;">Target Role</span>
-      <h2 style="margin:4px 0 0 0; color:#f8fafc; font-size:22px;">{{ job.title }}</h2>
-      <p style="margin:4px 0 0 0; color:#cbd5e1; font-size:14px;">Targeting {{ learning_path.missing_skill_count }} identified missing skill{% if learning_path.missing_skill_count != 1 %}s{% endif %}</p>
+      <span class="roadmap-hero-title">Target Role Overview</span>
+      <h2>{{ job.title }}</h2>
+      <p>{{ learning_path.missing_skill_count }} required skill{% if learning_path.missing_skill_count != 1 %}s{% endif %} identified for development</p>
     </div>
-    <div style="display:flex; gap:24px; background:rgba(255,255,255,0.08); padding:12px 20px; border-radius:8px;">
-      <div style="text-align:center;">
-        <span style="font-size:24px; font-weight:800; color:#38bdf8; display:block;">~{{ learning_path.total_estimated_hours }}h</span>
-        <span style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Total Learning</span>
+    <div class="roadmap-hero-stats">
+      <div class="stat-box">
+        <span class="val-cyan">~{{ learning_path.total_estimated_hours }}h</span>
+        <span class="lbl">Estimated Effort</span>
       </div>
-      <div style="width:1px; background:rgba(255,255,255,0.15);"></div>
-      <div style="text-align:center;">
-        <span style="font-size:24px; font-weight:800; color:#4ade80; display:block;">{{ learning_path.estimated_completion_weeks }} Wks</span>
-        <span style="font-size:11px; color:#94a3b8; text-transform:uppercase;">Est. Timeline (10h/wk)</span>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <span class="val-green">{{ learning_path.estimated_completion_weeks }} Wks</span>
+        <span class="lbl">Timeline (10h/wk)</span>
       </div>
     </div>
   </div>
@@ -31,55 +32,54 @@
 
 <!-- Learning Path Modules per Missing Skill -->
 {% for roadmap in learning_path.roadmaps %}
-<div class="item-card" style="width:100%; display:block; margin-bottom: 24px; border: 1px solid var(--border-color, #e2e8f0); border-radius:10px; overflow:hidden;">
+<div class="roadmap-module">
   <!-- Module Header -->
-  <div style="background:var(--card-head-bg, #f8fafc); padding:16px 20px; border-bottom:1px solid rgba(0,0,0,0.08); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+  <div class="roadmap-module-head">
     <div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <h3 style="margin:0; font-size:18px;">Module {{ forloop.counter }}: {{ roadmap.skill_name }}</h3>
-        <span style="font-size:11px; padding:3px 8px; border-radius:12px; font-weight:700; {% if roadmap.criticality == 'Critical Core' %}background:#fee2e2; color:#991b1b;{% else %}background:#f1f5f9; color:#475569;{% endif %}">
+      <div class="roadmap-module-title-group">
+        <h3>Module {{ forloop.counter }}: {{ roadmap.skill_name }}</h3>
+        <span class="{% if roadmap.criticality == 'Critical Core' %}badge-critical{% else %}badge-normal{% endif %}">
           {{ roadmap.criticality }}
         </span>
-        <span style="font-size:11px; background:#e0f2fe; color:#0369a1; padding:3px 8px; border-radius:12px; font-weight:600;">
+        <span class="badge-category">
           {{ roadmap.category }}
         </span>
       </div>
-      <p style="margin:6px 0 0 0; color:#64748b; font-size:13px;">{{ roadmap.description }}</p>
+      <p class="roadmap-module-desc">{{ roadmap.description }}</p>
     </div>
-    <div style="text-align:right;">
-      <span style="font-size:13px; font-weight:600; color:#334155;">⏱ ~{{ roadmap.estimated_hours }} Hours</span>
-      <span style="display:block; font-size:11px; color:#64748b;">{{ roadmap.difficulty }}</span>
+    <div class="roadmap-module-meta">
+      <span class="roadmap-hours">Est. {{ roadmap.estimated_hours }} Hours</span>
+      <span class="roadmap-difficulty">{{ roadmap.difficulty }}</span>
     </div>
   </div>
 
-  <div style="padding: 20px;">
+  <div class="roadmap-module-body">
     <!-- Step-by-Step Milestones -->
-    <h4 style="margin-top:0; margin-bottom:14px; font-size:14px; color:#334155;">🎯 Step-by-Step Learning Milestones</h4>
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin-bottom: 20px;">
+    <h4 class="timeline-section-title">Learning Milestones</h4>
+    <div class="timeline-grid">
       {% for milestone in roadmap.milestones %}
-      <div style="background:var(--card-bg, #ffffff); border:1px solid rgba(0,0,0,0.08); border-left: 4px solid {% if milestone.step == 1 %}#3b82f6{% elif milestone.step == 2 %}#8b5cf6{% else %}#10b981{% endif %}; padding:12px 16px; border-radius:6px;">
-        <span style="font-size:11px; font-weight:700; color:#64748b; text-transform:uppercase;">Phase {{ milestone.step }}</span>
-        <h5 style="margin:4px 0; font-size:14px; color:#0f172a;">{{ milestone.title }}</h5>
-        <p style="margin:0; font-size:12px; color:#475569; line-height:1.4;">{{ milestone.details }}</p>
+      <div class="timeline-card">
+        <span class="step-num">STEP 0{{ milestone.step }}</span>
+        <h5>{{ milestone.title }}</h5>
+        <p>{{ milestone.details }}</p>
       </div>
       {% endfor %}
     </div>
 
     <!-- Recommended Resources -->
-    <h4 style="margin-bottom:10px; font-size:14px; color:#334155;">📚 Recommended Learning Resources</h4>
-    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+    <h4 class="timeline-section-title">Curated Resources</h4>
+    <div class="resource-list">
       {% for res in roadmap.resources %}
-      <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:6px; text-decoration:none; color:#1e293b; border:1px solid #e2e8f0; transition: background 0.2s;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:16px;">📖</span>
-          <span style="font-size:13px; font-weight:600;">{{ res.title }}</span>
+      <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-info">
+          <span class="resource-title">{{ res.title }}</span>
         </div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:11px; background:#f1f5f9; color:#475569; padding:2px 8px; border-radius:4px;">{{ res.type }}</span>
+        <div class="resource-actions">
+          <span class="badge-type">{{ res.type }}</span>
           {% if res.free %}
-          <span style="font-size:11px; background:#dcfce7; color:#166534; padding:2px 8px; border-radius:4px; font-weight:600;">FREE</span>
+          <span class="badge-free">FREE</span>
           {% endif %}
-          <span style="font-size:12px; color:#2563eb;">Open ↗</span>
+          <span class="resource-open">View Resource</span>
         </div>
       </a>
       {% endfor %}
@@ -87,23 +87,25 @@
 
     <!-- Portfolio Project Idea -->
     {% if roadmap.project_idea %}
-    <div style="background:#f0fdf4; border:1px dashed #86efac; padding:12px 16px; border-radius:8px;">
-      <strong style="color:#166534; font-size:13px; display:block;">💡 Recommended Portfolio Project:</strong>
-      <p style="margin:4px 0 0 0; font-size:13px; color:#15803d; line-height:1.4;">{{ roadmap.project_idea }}</p>
+    <div class="project-box">
+      <strong>Practical Application Project:</strong>
+      <p>{{ roadmap.project_idea }}</p>
     </div>
     {% endif %}
   </div>
 </div>
 {% empty %}
-<div class="item-card" style="width:100%; text-align:center; padding:30px;">
-  <h3 style="color:#166534;">🎉 Zero Skill Gap!</h3>
-  <p>You already possess all identified skills for {{ job.title }}. You are ready to apply with top recommendations.</p>
-  <a href="{% url 'matching-home' %}" class="btn" style="display:inline-block; margin-top:12px;">Back to Jobs</a>
+<div class="roadmap-module" style="text-align:center; padding:36px 20px;">
+  <h3 style="color:var(--ok); font-family:var(--font-display); font-size:20px; margin:0 0 6px;">Skill Qualifications Verified</h3>
+  <p style="color:var(--text-mid); margin:0;">You already possess all required skills for {{ job.title }}. You are fully qualified to submit your application.</p>
+  <a href="{% url 'matching-home' %}" class="btn-small btn-brass" style="display:inline-block; margin-top:16px;">Back to Job Matches</a>
 </div>
 {% endfor %}
 
 <div class="form-actions" style="margin-top:24px; display:flex; gap:12px;">
-  <a href="{% url 'candidate_skill_gap' job.id %}" class="btn-small">Back to Skill Gap Analysis</a>
-  <a href="{% url 'matching-home' %}" class="btn-small">Back to Job Matches</a>
+  <a href="{% url 'candidate_skill_gap' job.id %}" class="btn-small">Skill Gap Details</a>
+  <a href="{% url 'matching-home' %}" class="btn-small btn-brass">Back to Job Matches</a>
 </div>
 {% endblock %}
+
+

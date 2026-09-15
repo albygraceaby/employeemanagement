@@ -181,30 +181,30 @@
             <div class="progress-pipeline">
               <!-- Step 1: Applied -->
               <span class="pipeline-step {% if app.status == 'applied' %}step-current{% else %}step-done{% endif %}">
-                ✓ Applied
+                Applied
               </span>
-              <span class="pipeline-arrow">➔</span>
+              <span class="pipeline-arrow">&gt;</span>
 
               <!-- Step 2: Shortlisted -->
               <span class="pipeline-step {% if app.status == 'shortlisted' %}step-current{% elif app.status == 'interview' or app.status == 'selected' %}step-done{% endif %}">
-                {% if app.status == 'shortlisted' or app.status == 'interview' or app.status == 'selected' %}✓ Shortlisted{% else %}Shortlisted{% endif %}
+                Shortlisted
               </span>
-              <span class="pipeline-arrow">➔</span>
+              <span class="pipeline-arrow">&gt;</span>
 
               <!-- Step 3: Interview -->
               <span class="pipeline-step {% if app.status == 'interview' %}step-current{% elif app.status == 'selected' %}step-done{% endif %}">
-                {% if app.status == 'interview' or app.status == 'selected' %}✓ Interview{% else %}Interview{% endif %}
+                Interview
               </span>
-              <span class="pipeline-arrow">➔</span>
+              <span class="pipeline-arrow">&gt;</span>
 
               <!-- Step 4: Final Outcome -->
               {% if app.status == 'selected' %}
-                <span class="pipeline-step step-done" style="background:#2b8a3e; color:#fff;">
-                  ★ Selected
+                <span class="pipeline-step step-done">
+                  Selected
                 </span>
               {% elif app.status == 'rejected' %}
                 <span class="pipeline-step step-rejected">
-                  ✕ Rejected
+                  Rejected
                 </span>
               {% else %}
                 <span class="pipeline-step">

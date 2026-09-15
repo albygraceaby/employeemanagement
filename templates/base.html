@@ -22,7 +22,7 @@
       <a href="{% url 'recruiter_jobs' %}" class="{% if request.resolver_match.url_name == 'recruiter_jobs' %}active{% endif %}">My Jobs</a>
       <a href="{% url 'post_job' %}" class="{% if request.resolver_match.url_name == 'post_job' %}active{% endif %}">Post a Job</a>
       <a href="{% url 'candidates_list' %}" class="{% if request.resolver_match.url_name == 'candidates_list' %}active{% endif %}">Candidates</a>
-      <a href="{% url 'matching-candidates' %}" class="{% if request.resolver_match.url_name == 'matching-candidates' %}active{% endif %}">AI Recommendations</a>
+      <a href="{% url 'matching-candidates' %}" class="{% if request.resolver_match.url_name == 'matching-candidates' %}active{% endif %}">Match Recommendations</a>
       <a href="{% url 'kuldeep_email_demo' %}" class="{% if request.resolver_match.url_name == 'kuldeep_email_demo' %}active{% endif %}">Email Notifications</a>
       <a href="{% url 'interview_recruiter_dashboard' %}" class="{% if request.resolver_match.url_name == 'interview_recruiter_dashboard' %}active{% endif %}">Interviews</a>
       <a href="{% url 'analytics' %}" class="{% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">Analytics</a>

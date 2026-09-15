@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %}AI Candidate Recommendations — TalentSphere Elevate{% endblock %}
+{% block title %}Candidate Recommendations — TalentSphere Elevate{% endblock %}
 {% block page %}matching{% endblock %}
 {% block content %}
 
 <div class="match-page-head">
   <div>
-    <div class="match-eyebrow">TalentSphere Elevate · Smart Matching</div>
-    <h1>AI Candidate Recommendations</h1>
-    <p>Applicants across your job postings, ranked by skill, experience and keyword fit.</p>
+    <div class="match-eyebrow">TalentSphere Elevate · Candidate Assessment</div>
+    <h1>Candidate Recommendations</h1>
+    <p>Applicants ranked across job postings by skill qualifications, experience, and domain alignment.</p>
   </div>
   <a href="{% url 'candidates_list' %}" class="btn-small">Browse Candidates</a>
 </div>
@@ -22,21 +22,21 @@
     <span>Job postings</span>
   </div>
   <div>
-    <span class="summary-number">AI</span>
-    <span>Explainable scoring</span>
+    <span class="summary-number">Weighted</span>
+    <span>Algorithmic scoring</span>
   </div>
 </div>
 
 <div class="match-list-head">
   <div>
-    <h2>Filter by job</h2>
-    <p>Narrow recommendations down to one posting, or view every applicant ranked together.</p>
+    <h2>Filter by Job</h2>
+    <p>Narrow candidate recommendations down to a specific posting.</p>
   </div>
 </div>
 
-<form method="get" class="item-card" style="margin-bottom:28px;">
+<form method="get" class="item-card" style="margin-bottom:28px; background:var(--ink-800); border:1px solid var(--line-soft); border-radius:var(--radius-md); padding:16px 20px;">
   <div style="flex:1;">
-    <select name="job" style="min-width:280px;" onchange="this.form.submit()">
+    <select name="job" style="min-width:280px; padding:10px 14px; background:var(--ink-700); color:var(--text-hi); border:1px solid var(--line-soft); border-radius:var(--radius-sm); font-size:14px; outline:none;" onchange="this.form.submit()">
       <option value="">All job postings</option>
       {% for job in jobs %}
         <option value="{{ job.id }}" {% if job_filter == job.id|stringformat:"s" %}selected{% endif %}>{{ job.title }}</option>
@@ -85,8 +85,8 @@
       </div>
     </div>
 
-    <div class="ai-recommendation">
-      <div class="ai-title">AI Recommendation</div>
+    <div class="match-analysis-box">
+      <div class="match-analysis-title">Assessment Summary</div>
       <div>{{ item.match.recommendation }}</div>
     </div>
 
@@ -116,21 +116,22 @@
   </article>
 {% empty %}
   <div class="empty-state">
-    No applicants to recommend yet. Once candidates apply to your job postings, they'll be ranked here automatically.
+    No candidate applications available to display right now.
   </div>
 {% endfor %}
 
 {% if page_obj and page_obj.has_other_pages %}
 <div class="pagination" style="display:flex; justify-content:center; align-items:center; gap:8px; margin-top:24px; padding:12px;">
   {% if page_obj.has_previous %}
-    <a href="?page={{ page_obj.previous_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">← Previous</a>
+    <a href="?page={{ page_obj.previous_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">Previous</a>
   {% endif %}
   <span style="font-size:14px; font-weight:600;">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
   {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">Next →</a>
+    <a href="?page={{ page_obj.next_page_number }}{% if job_filter %}&job={{ job_filter }}{% endif %}" class="btn-small">Next</a>
   {% endif %}
 </div>
 {% endif %}
 
 {% endblock %}
+
 

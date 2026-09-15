@@ -1,39 +1,49 @@
 /* =========================================================
-   TalentSphere Elevate — Auth System Design Tokens
-   Concept: "Elevation" — climbing toward verified trust.
-   Palette: deep indigo night sky + brass/gold ascent accent
-========================================================= */
+   TalentSphere Elevate — Enterprise Creative Design Tokens
+   Palette: Obsidian Slate + Electric Indigo & Mint Accents
+   ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --ink-900: #0B1220;
-  --ink-800: #10182C;
-  --ink-700: #161F38;
-  --ink-600: #1F2A48;
-  --line: rgba(201, 162, 39, 0.16);
-  --line-soft: rgba(232, 234, 240, 0.08);
+  --ink-900: #080C14;
+  --ink-800: #0F1523;
+  --ink-700: #141C2E;
+  --ink-600: #1E293B;
+  --ink-500: #334155;
+  
+  --line: rgba(99, 102, 241, 0.25);
+  --line-soft: rgba(255, 255, 255, 0.08);
 
-  --text-hi: #ECEEF5;
-  --text-mid: #A7AFC4;
-  --text-low: #6B7390;
+  --text-hi: #F8FAFC;
+  --text-mid: #94A3B8;
+  --text-low: #64748B;
 
-  --brass: #C9A227;
-  --brass-hi: #E4C355;
-  --brass-dim: rgba(201, 162, 39, 0.14);
+  --indigo: #6366F1;
+  --indigo-hi: #818CF8;
+  --indigo-dim: rgba(99, 102, 241, 0.15);
 
-  --danger: #E5697A;
-  --danger-bg: rgba(229, 105, 122, 0.1);
-  --ok: #58C99A;
+  --cyan: #38BDF8;
+  --cyan-dim: rgba(56, 189, 248, 0.12);
 
-  --radius-lg: 18px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
+  --brass: #D97706;
+  --brass-hi: #F59E0B;
+  --brass-dim: rgba(245, 158, 11, 0.14);
 
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --danger: #FB7185;
+  --danger-bg: rgba(244, 63, 94, 0.12);
+  --ok: #34D399;
+  --ok-dim: rgba(52, 211, 153, 0.14);
 
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --radius-sm: 6px;
+
+  --font-display: 'Outfit', 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-bento: 0 12px 32px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 * { box-sizing: border-box; }
@@ -45,10 +55,17 @@ html, body {
   font-family: var(--font-body);
   color: var(--text-hi);
   background:
-    radial-gradient(1100px 600px at 15% -10%, rgba(201,162,39,0.10), transparent 60%),
-    radial-gradient(900px 700px at 100% 110%, rgba(80,110,200,0.10), transparent 55%),
-    linear-gradient(180deg, var(--ink-900), var(--ink-800) 55%, #0A0F1C 100%);
+    radial-gradient(1200px 700px at 15% -10%, rgba(99, 102, 241, 0.16), transparent 60%),
+    radial-gradient(1000px 800px at 85% 110%, rgba(56, 189, 248, 0.12), transparent 55%),
+    linear-gradient(180deg, var(--ink-900), #0B0F1A 50%, #070A10 100%);
   background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+select option {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  padding: 8px;
 }
 
 /* ---------- Layout shell ---------- */
@@ -81,7 +98,7 @@ html, body {
   position: absolute;
   inset: -20% -10% auto -10%;
   height: 480px;
-  background: radial-gradient(closest-side, rgba(201,162,39,0.14), transparent 70%);
+  background: radial-gradient(closest-side, rgba(99, 102, 241, 0.18), transparent 70%);
   pointer-events: none;
 }
 
@@ -93,23 +110,24 @@ html, body {
 }
 
 .brand-mark .glyph {
-  width: 38px; height: 38px;
+  width: 40px; height: 40px;
   border-radius: 10px;
-  background: linear-gradient(155deg, var(--brass-hi), var(--brass) 70%);
+  background: linear-gradient(135deg, var(--indigo-hi), var(--indigo));
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--ink-900);
+  font-weight: 800;
+  color: #FFFFFF;
   font-size: 18px;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
 }
 
 .brand-mark span.name {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 17px;
+  font-weight: 700;
+  font-size: 18px;
   letter-spacing: 0.01em;
 }
-.brand-mark span.name b { color: var(--brass-hi); font-weight: 700; }
+.brand-mark span.name b { color: var(--cyan); font-weight: 800; }
 
 .brand-copy {
   z-index: 1;
@@ -124,23 +142,23 @@ html, body {
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brass-hi);
-  font-weight: 600;
+  color: var(--cyan);
+  font-weight: 700;
   margin-bottom: 18px;
 }
 
 .brand-copy h1 {
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: 42px;
   line-height: 1.12;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0 0 18px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .brand-copy p {
   color: var(--text-mid);
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.65;
   margin: 0;
 }
@@ -160,9 +178,9 @@ html, body {
   font-size: 13.5px;
 }
 .ascent .rung .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--brass);
-  box-shadow: 0 0 0 4px var(--brass-dim);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 4px var(--cyan-dim);
   flex-shrink: 0;
 }
 .ascent .rung b { color: var(--text-hi); font-weight: 600; }
@@ -186,11 +204,12 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  padding: 5px;
+  padding: 6px;
   background: var(--ink-700);
   border: 1px solid var(--line-soft);
   border-radius: 999px;
   margin-bottom: 28px;
+  box-shadow: var(--shadow-bento);
 }
 
 .role-tab {
@@ -203,28 +222,30 @@ html, body {
   padding: 10px 14px;
   border-radius: 999px;
   cursor: pointer;
-  transition: color 0.2s var(--ease), background 0.25s var(--ease);
+  transition: color 0.2s var(--ease), background 0.25s var(--ease), box-shadow 0.25s var(--ease);
   letter-spacing: 0.01em;
 }
 
 .role-tab.active {
-  background: linear-gradient(155deg, var(--brass-hi), var(--brass));
-  color: var(--ink-900);
+  background: linear-gradient(135deg, var(--indigo-hi), var(--indigo));
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
 }
 
 .panel-head { margin-bottom: 26px; }
 .panel-head h2 {
   font-family: var(--font-display);
-  font-size: 27px;
-  font-weight: 700;
+  font-size: 28px;
+  font-weight: 800;
   margin: 0 0 8px;
+  letter-spacing: -0.01em;
 }
 .panel-head p {
   color: var(--text-mid);
-  font-size: 14px;
+  font-size: 14.5px;
   margin: 0;
 }
-.panel-head p a { color: var(--brass-hi); text-decoration: none; }
+.panel-head p a { color: var(--indigo-hi); font-weight: 600; text-decoration: none; }
 .panel-head p a:hover { text-decoration: underline; }
 
 /* Card + Elevation meter dock */
@@ -236,14 +257,14 @@ html, body {
 }
 
 .card {
-  background: linear-gradient(180deg, var(--ink-700), var(--ink-800));
+  background: var(--ink-800);
   border: 1px solid var(--line-soft);
   border-radius: var(--radius-lg);
-  padding: 28px 26px 26px;
+  padding: 30px 28px 28px;
+  box-shadow: var(--shadow-bento);
 }
 
-/* The signature element: a vertical Elevation Meter that rises
-   as each verification requirement is genuinely satisfied. */
+/* Vertical Elevation Meter */
 .elevation-meter {
   position: relative;
   border-radius: 999px;
@@ -255,15 +276,16 @@ html, body {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 4%;
-  background: linear-gradient(0deg, var(--brass), var(--brass-hi));
+  background: linear-gradient(0deg, var(--indigo), var(--cyan));
   transition: height 0.5s var(--ease);
   border-radius: 999px 999px 0 0;
+  box-shadow: 0 0 10px var(--cyan);
 }
 .elevation-meter .fill::after {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; height: 10px;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.4);
   filter: blur(3px);
 }
 .elevation-label {
@@ -273,16 +295,17 @@ html, body {
   text-transform: uppercase;
   color: var(--text-low);
   margin-top: 8px;
+  font-weight: 600;
 }
 
 /* Fields */
-.field { margin-bottom: 16px; position: relative; }
+.field { margin-bottom: 18px; position: relative; }
 .field label {
   display: block;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-mid);
-  margin-bottom: 7px;
+  margin-bottom: 8px;
   letter-spacing: 0.01em;
 }
 
@@ -290,20 +313,20 @@ html, body {
 
 .field input {
   width: 100%;
-  background: var(--ink-900);
+  background: var(--ink-700);
   border: 1px solid var(--line-soft);
   color: var(--text-hi);
   font-family: var(--font-body);
   font-size: 14.5px;
-  padding: 12px 14px;
+  padding: 12px 16px;
   border-radius: var(--radius-sm);
   outline: none;
   transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .field input::placeholder { color: var(--text-low); }
 .field input:focus {
-  border-color: var(--brass);
-  box-shadow: 0 0 0 3px var(--brass-dim);
+  border-color: var(--indigo);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
 }
 .field input.valid { border-color: var(--ok); }
 .field input.invalid { border-color: var(--danger); }
@@ -312,10 +335,10 @@ html, body {
   position: absolute;
   right: 12px; top: 50%; transform: translateY(-50%);
   background: none; border: none; color: var(--text-low);
-  cursor: pointer; font-size: 12px; font-weight: 600;
-  letter-spacing: 0.03em;
+  cursor: pointer; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.04em;
 }
-.field .toggle-visibility:hover { color: var(--text-mid); }
+.field .toggle-visibility:hover { color: var(--indigo-hi); }
 
 .hint {
   font-size: 12px;
@@ -323,8 +346,8 @@ html, body {
   margin-top: 6px;
   min-height: 15px;
 }
-.hint.error { color: var(--danger); }
-.hint.ok { color: var(--ok); }
+.hint.error { color: var(--danger); font-weight: 500; }
+.hint.ok { color: var(--ok); font-weight: 500; }
 
 .two-col {
   display: grid;
@@ -335,15 +358,20 @@ html, body {
   .two-col { grid-template-columns: 1fr; }
 }
 
+select option {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+}
+
 /* Phone field with country code */
 .phone-row { display: flex; gap: 8px; }
 .phone-row select {
-  width: 92px;
-  background: var(--ink-900);
+  width: 96px;
+  background: var(--ink-700);
   border: 1px solid var(--line-soft);
   color: var(--text-hi);
   border-radius: var(--radius-sm);
-  padding: 0 8px;
+  padding: 0 10px;
   font-family: var(--font-body);
   font-size: 13.5px;
 }
@@ -368,38 +396,38 @@ html, body {
 .admin-note {
   display: flex;
   gap: 10px;
-  background: var(--brass-dim);
-  border: 1px solid rgba(201,162,39,0.3);
+  background: var(--indigo-dim);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
-  padding: 11px 13px;
-  font-size: 12.5px;
+  padding: 12px 14px;
+  font-size: 13px;
   color: var(--text-mid);
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   line-height: 1.5;
 }
-.admin-note b { color: var(--brass-hi); }
+.admin-note b { color: var(--cyan); font-weight: 700; }
 
 /* Math captcha */
 .captcha-box {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--ink-900);
-  border: 1px dashed var(--line-soft);
+  background: var(--ink-700);
+  border: 1px dashed var(--line);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
 }
 .captcha-equation {
   font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--brass-hi);
+  color: var(--cyan);
   user-select: none;
   white-space: nowrap;
 }
 .captcha-box input {
-  width: 70px;
+  width: 72px;
   flex-shrink: 0;
   text-align: center;
 }
@@ -408,12 +436,12 @@ html, body {
   border: none;
   color: var(--text-low);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 16px;
   padding: 4px;
   margin-left: auto;
   transition: transform 0.3s var(--ease), color 0.2s var(--ease);
 }
-.captcha-refresh:hover { color: var(--brass-hi); }
+.captcha-refresh:hover { color: var(--cyan); }
 .captcha-refresh.spin { transform: rotate(180deg); }
 
 /* Slide-to-verify human check */
@@ -421,7 +449,7 @@ html, body {
   position: relative;
   height: 48px;
   border-radius: 999px;
-  background: var(--ink-900);
+  background: var(--ink-700);
   border: 1px solid var(--line-soft);
   overflow: hidden;
   user-select: none;
@@ -432,7 +460,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--text-low);
   letter-spacing: 0.02em;
   pointer-events: none;
@@ -442,63 +470,64 @@ html, body {
   position: absolute;
   left: 0; top: 0; bottom: 0;
   width: 48px;
-  background: linear-gradient(90deg, transparent, var(--brass-dim));
+  background: linear-gradient(90deg, transparent, var(--indigo-dim));
 }
 .slide-verify .handle {
   position: absolute;
   left: 0; top: 0;
   width: 48px; height: 48px;
   border-radius: 50%;
-  background: linear-gradient(155deg, var(--brass-hi), var(--brass));
+  background: linear-gradient(135deg, var(--indigo-hi), var(--indigo));
   display: flex; align-items: center; justify-content: center;
   cursor: grab;
-  font-weight: 700;
-  color: var(--ink-900);
-  box-shadow: 0 4px 14px rgba(201,162,39,0.35);
+  font-weight: 800;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
   touch-action: none;
 }
 .slide-verify .handle:active { cursor: grabbing; }
-.slide-verify.verified .track-label { color: var(--ok); }
-.slide-verify.verified .handle { background: linear-gradient(155deg, #7EE0B8, var(--ok)); }
+.slide-verify.verified .track-label { color: var(--ok); font-weight: 600; }
+.slide-verify.verified .handle { background: linear-gradient(135deg, #34D399, #059669); }
 
 /* Checkbox row */
 .check-row {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--text-mid);
-  margin: 4px 0 20px;
+  margin: 6px 0 22px;
   line-height: 1.5;
 }
-.check-row input { margin-top: 3px; accent-color: var(--brass); }
-.check-row a { color: var(--brass-hi); text-decoration: none; }
+.check-row input { margin-top: 3px; accent-color: var(--indigo); }
+.check-row a { color: var(--indigo-hi); text-decoration: none; font-weight: 600; }
 
 /* Submit button */
 .btn-elevate {
   width: 100%;
-  padding: 13px 18px;
+  padding: 14px 20px;
   border: none;
   border-radius: var(--radius-sm);
-  background: linear-gradient(155deg, var(--brass-hi), var(--brass));
-  color: var(--ink-900);
+  background: linear-gradient(135deg, var(--indigo), var(--indigo-hi));
+  color: #FFFFFF;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: 15px;
   cursor: pointer;
-  transition: transform 0.15s var(--ease), box-shadow 0.2s var(--ease), opacity 0.2s;
-  box-shadow: 0 8px 24px -8px rgba(201,162,39,0.5);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), opacity 0.2s;
+  box-shadow: 0 8px 24px -6px rgba(99, 102, 241, 0.5);
+  letter-spacing: 0.01em;
 }
-.btn-elevate:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 28px -8px rgba(201,162,39,0.6); }
-.btn-elevate:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+.btn-elevate:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.65); }
+.btn-elevate:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: none; }
 
 .foot-link {
   text-align: center;
-  margin-top: 20px;
-  font-size: 13px;
+  margin-top: 22px;
+  font-size: 13.5px;
   color: var(--text-low);
 }
-.foot-link a { color: var(--brass-hi); text-decoration: none; font-weight: 600; }
+.foot-link a { color: var(--indigo-hi); text-decoration: none; font-weight: 600; }
 .foot-link a:hover { text-decoration: underline; }
 
 /* Toast for success */
