@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Recruiter Metrics — TalentSphere Elevate{% endblock %}
+{% block page %}dashboard{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Recruiter Metrics</h1>
+  <p>Your hiring activity for the jobs you posted.</p>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ total_jobs_posted }}</div>
+    <div class="stat-label">Total jobs posted</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ total_applications_received }}</div>
+    <div class="stat-label">Total applications received</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ total_candidates_interviewed }}</div>
+    <div class="stat-label">Total candidates interviewed</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Your Recruiter Statistics</div>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Recruiter</th>
+          <th>Company</th>
+          <th>Jobs posted</th>
+          <th>Applications received</th>
+          <th>Candidates interviewed</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for recruiter in recruiters %}
+        <tr>
+          <td>{{ recruiter.recruiter_profile.full_name|default:recruiter.username }}</td>
+          <td>{{ recruiter.recruiter_profile.company_name|default:"—" }}</td>
+          <td>{{ recruiter.jobs_posted }}</td>
+          <td>{{ recruiter.applications_received }}</td>
+          <td>{{ recruiter.candidates_interviewed }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No recruiters yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

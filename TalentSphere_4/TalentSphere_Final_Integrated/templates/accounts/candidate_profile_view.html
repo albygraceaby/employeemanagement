@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Candidate Profile — TalentSphere Elevate{% endblock %}
+{% block page %}profile{% endblock %}
+{% block content %}
+
+<div class="page-head">
+  <h1>{{ profile.full_name }}</h1>
+  <p>
+    {% if profile.current_designation %}{{ profile.current_designation }}{% endif %}
+    {% if profile.current_company %} at {{ profile.current_company }}{% endif %}
+    {% if not profile.current_designation and not profile.current_company %}Candidate Profile{% endif %}
+  </p>
+</div>
+
+<div class="section">
+  <div class="section-title">Candidate profile</div>
+  <div class="item-card">
+    <div style="width:100%;">
+      <div class="meta">
+        {% if profile.email %}<span>{{ profile.email }}</span>{% endif %}
+        {% if profile.location %}<span>{{ profile.location }}</span>{% endif %}
+        <span>{{ profile.experience_years }} years experience</span>
+        {% if profile.get_highest_qualification_display %}<span>{{ profile.get_highest_qualification_display }}</span>{% endif %}
+      </div>
+
+      {% if profile.professional_summary %}
+        <p style="margin-top:14px;">{{ profile.professional_summary|linebreaksbr }}</p>
+      {% endif %}
+
+      <div style="margin-top:16px;">
+        <strong>Skills</strong>
+        <div class="tags" style="margin-top:8px;">
+          {% for skill in profile.skills_list %}
+            <span class="tag">{{ skill }}</span>
+          {% empty %}
+            <span class="meta">No skills added yet.</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div style="margin-top:18px;">
+        <strong>Experience</strong>
+        <p style="margin-top:6px;">
+          {{ profile.experience_years }} years
+          {% if profile.current_designation %} · {{ profile.current_designation }}{% endif %}
+          {% if profile.current_company %} · {{ profile.current_company }}{% endif %}
+        </p>
+      </div>
+
+      <div style="margin-top:18px;">
+        <strong>Projects</strong>
+        <p style="margin-top:6px;">{{ profile.projects|default:"No projects added yet."|linebreaksbr }}</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="{% url 'edit_profile' %}" class="btn-small btn-brass">Edit Profile</a>
+      {% if profile.resume %}
+        <a href="{{ profile.resume.url }}" class="btn-small">View / Download Resume</a>
+      {% else %}
+        <a href="{% url 'edit_profile' %}" class="btn-small">Upload Resume</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Matching jobs</div>
+  <p class="meta" style="margin-bottom:14px;">
+    Jobs are ranked using skill, experience and keyword signals. Open <a href="{% url 'matching-home' %}" style="color:var(--brass-hi);">AI Job Matches</a> to see the full score breakdown.
+  </p>
+
+  {% for item in ranked_jobs %}
+    <div class="item-card">
+      <div style="width:100%;">
+        <h3>{{ item.job.title }}</h3>
+        <div class="meta">
+          <span>{{ item.job.recruiter.recruiter_profile.company_name|default:item.job.recruiter.username }}</span>
+          <span>{{ item.job.location }}</span>
+          <span>{{ item.job.get_job_type_display }}</span>
+        </div>
+
+        <div style="margin-top:12px;">
+          <strong>Match: {{ item.match.match_percentage }}%</strong>
+        </div>
+
+        <div style="margin-top:10px;">
+          <strong>Matching skills:</strong>
+          {% for skill in item.match.matching_skills %}
+            <span class="tag">{{ skill }}</span>
+          {% empty %}
+            <span class="meta">None</span>
+          {% endfor %}
+        </div>
+
+        <div style="margin-top:10px;">
+          <strong>Missing skills:</strong>
+          {% for skill in item.match.missing_skills %}
+            <span class="tag">{{ skill }}</span>
+          {% empty %}
+            <span class="meta">None — you match all required skills.</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="actions">
+        {% if item.job.id in applied_job_ids %}
+          <span class="badge badge-applied">Applied</span>
+        {% else %}
+          <form method="post" action="{% url 'matching-apply' item.job.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-small btn-brass">Apply now</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="empty-state">
+      No active jobs are available yet. Once recruiters post jobs, your matches will appear here.
+    </div>
+  {% endfor %}
+
+  <div style="margin-top:14px;">
+    <a href="{% url 'matching-home' %}" class="btn-small">View all matches →</a>
+  </div>
+</div>
+
+{% endblock %}

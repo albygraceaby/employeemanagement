@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TalentSphere Elevate — Next-Gen AI Talent Intelligence</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+<body data-page="landing" class="landing-body">
+
+<!-- Header / Navigation Bar -->
+<header class="landing-nav">
+  <div class="nav-container">
+    <div class="brand-mark">
+      <div class="glyph">TE</div>
+      <span class="name">TalentSphere <b>Elevate</b></span>
+    </div>
+    
+    <nav class="landing-menu">
+      <a href="#features">Features</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#how-it-works">How It Works</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="{% url 'login' %}" class="btn-secondary">Sign in</a>
+      <a href="{% url 'signup' %}" class="btn-elevate-sm">Get Started Free →</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <div class="hero-container">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span class="badge-text">AI-POWERED TALENT & CAREER ELEVATION</span>
+    </div>
+
+    <h1 class="hero-title">
+      Where Top Tech Talent Meets <span class="gradient-text">Intelligent Hiring</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      Eliminate hiring friction and career roadblocks. TalentSphere Elevate pairs automated skill graph matching, resume intelligence, and real-time interview workflows in one unified obsidian platform.
+    </p>
+
+    <div class="hero-cta-group">
+      <a href="{% url 'signup' %}?role=candidate" class="btn-elevate btn-hero">
+        <span>Explore Jobs as Candidate</span>
+      </a>
+      <a href="{% url 'signup' %}?role=recruiter" class="btn-ghost-glow btn-hero">
+        <span>Hire Talent as Recruiter</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Dual Audience Toggle / Interactive Solutions Section -->
+<section id="solutions" class="solutions-section">
+  <div class="section-container">
+    <div class="section-head text-center">
+      <div class="eyebrow">TAILORED WORKFLOWS</div>
+      <h2>Designed for High-Growth Candidates & Talent Leaders</h2>
+      <p>Whether you're ascending in your tech career or building world-class engineering teams.</p>
+    </div>
+
+    <div class="solutions-grid">
+      <!-- For Candidates Card -->
+      <div class="solution-card candidate-theme">
+        <div class="solution-badge">FOR JOB SEEKERS</div>
+        <h3>Accelerate Your Career Climb</h3>
+        <p>Get matched directly with high-impact roles based on your verified skills, experience, and career trajectory goals.</p>
+        
+        <ul class="feature-checklist">
+          <li><span class="check-icon">✓</span> Smart automated resume parsing & profile auto-enrichment</li>
+          <li><span class="check-icon">✓</span> AI Match scores highlighting top job compatibility</li>
+          <li><span class="check-icon">✓</span> Direct application tracking and interview scheduling</li>
+          <li><span class="check-icon">✓</span> Real-time candidate metrics and salary benchmarking</li>
+        </ul>
+
+        <div class="card-footer-action">
+          <a href="{% url 'signup' %}?role=candidate" class="btn-link">Create Candidate Profile →</a>
+        </div>
+      </div>
+
+      <!-- For Recruiters Card -->
+      <div class="solution-card recruiter-theme">
+        <div class="solution-badge badge-cyan">FOR RECRUITERS & MANAGERS</div>
+        <h3>Screen & Hire Premier Talent</h3>
+        <p>Replace manual resume sifting with instant AI rank ordering, candidate pipeline telemetry, and automated interview dispatch.</p>
+
+        <ul class="feature-checklist">
+          <li><span class="check-icon icon-cyan">✓</span> Multi-dimensional candidate skill graph matching</li>
+          <li><span class="check-icon icon-cyan">✓</span> One-click job distribution and active pipeline dashboards</li>
+          <li><span class="check-icon icon-cyan">✓</span> Built-in interview scheduling with feedback logging</li>
+          <li><span class="check-icon icon-cyan">✓</span> Recruiter performance metrics & time-to-hire analytics</li>
+        </ul>
+
+        <div class="card-footer-action">
+          <a href="{% url 'signup' %}?role=recruiter" class="btn-link link-cyan">Post Your First Job Opening →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feature Showcase Bento Grid -->
+<section id="features" class="features-section">
+  <div class="section-container">
+    <div class="section-head text-center">
+      <div class="eyebrow">INTELLIGENT RECRUITMENT SUITE</div>
+      <h2>Engineered to Replace Legacy ATS Noise</h2>
+    </div>
+
+    <div class="bento-grid">
+      <!-- Bento Item 1 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <div class="bento-tag">AI CORE</div>
+        <h3>Vector Skill Graph Matching</h3>
+        <p>Our algorithms evaluate deep contextual skills, project experience, and role requisites—delivering instant compatibility scores above 95%.</p>
+      </div>
+
+      <!-- Bento Item 2 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <div class="bento-tag tag-cyan">TELEMETRY</div>
+        <h3>Full Pipeline Telemetry</h3>
+        <p>Track time-to-hire, source effectiveness, interviewer throughput, and candidate dropoff rates with precision real-time analytics.</p>
+      </div>
+
+      <!-- Bento Item 3 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <div class="bento-tag">AUTOMATION</div>
+        <h3>Automated Resume Parsing</h3>
+        <p>Instantly scan candidate resumes to extract tech stacks, years of experience, and role qualifications into structured candidate profiles in seconds.</p>
+      </div>
+
+      <!-- Bento Item 4 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <h3>Smart Interview Hub</h3>
+        <p>Coordinate screening calls, technical evaluations, and panel interviews with automated notifications and feedback collection.</p>
+      </div>
+
+      <!-- Bento Item 5 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <h3>Candidate Rank Ordering</h3>
+        <p>Prioritize top applicants automatically so hiring managers review the highest-fit profiles first without manual bias.</p>
+      </div>
+
+      <!-- Bento Item 6 -->
+      <div class="bento-card bento-third">
+        <div class="bento-icon"></div>
+        <h3>Enterprise Security</h3>
+        <p>Role-based security controls, encrypted profile data, and compliant candidate privacy protection at scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="steps-section">
+  <div class="section-container">
+    <div class="section-head text-center">
+      <div class="eyebrow">SIMPLE 3-STEP FLOW</div>
+      <h2>How TalentSphere Elevate Works</h2>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h4>Create Your Profile</h4>
+        <p>Set up your candidate skill matrix or post your team's open hiring positions in minutes.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h4>AI Recommendation</h4>
+        <p>Our intelligent engine scans vector skill signals to surface highest-fit matches immediately.</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h4>Interview & Elevate</h4>
+        <p>Conduct streamlined interviews, track pipeline status, and complete offers effortlessly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA Banner -->
+<section class="bottom-cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-container">
+    <h2>Ready to Elevate Your Talent Journey?</h2>
+    <p>Join thousands of candidates and top hiring teams today. Experience the future of intelligent recruitment.</p>
+    <div class="cta-buttons">
+      <a href="{% url 'signup' %}" class="btn-elevate btn-large">Get Started For Free</a>
+      <a href="{% url 'login' %}" class="btn-secondary btn-large">Sign In to Dashboard</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="landing-footer">
+  <div class="footer-container">
+    <div class="footer-brand">
+      <div class="brand-mark">
+        <div class="glyph">TE</div>
+        <span class="name">TalentSphere <b>Elevate</b></span>
+      </div>
+      <p>© 2026 TalentSphere Elevate. All rights reserved. Next-Gen Talent & Hiring Platform.</p>
+    </div>
+    
+    <div class="footer-links">
+      <a href="{% url 'login' %}">Sign In</a>
+      <a href="{% url 'signup' %}?role=candidate">Join as Candidate</a>
+      <a href="{% url 'signup' %}?role=recruiter">Post Jobs</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

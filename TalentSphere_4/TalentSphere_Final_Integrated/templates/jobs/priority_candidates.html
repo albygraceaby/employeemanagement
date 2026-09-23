@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Priority Candidates — TalentSphere Elevate{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Priority Candidate Ranking</h1>
+  <p>Applicants ranked by ATS score using job-skill match and experience.</p>
+</div>
+
+<div class="form-card">
+  <form method="get" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end;">
+    <div class="form-field">
+      <label>Status</label>
+      <select name="status">
+        <option value="">All statuses</option>
+        {% for value,label in status_choices %}
+          <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Skill contains</label>
+      <input type="text" name="skill" value="{{ skill_filter }}" placeholder="Python, SQL, Testing">
+    </div>
+    <div class="form-field">
+      <label>Minimum ATS score</label>
+      <input type="number" name="min_score" min="0" max="100" step="1" value="{{ min_score }}" placeholder="70">
+    </div>
+    <div class="form-actions">
+      <button class="btn-small btn-brass" type="submit">Filter</button>
+      <a class="btn-small" href="{% url 'priority_candidates' %}">Clear</a>
+    </div>
+  </form>
+</div>
+
+<div class="section">
+  <div class="section-title">{{ ranked_candidates|length }} candidate{{ ranked_candidates|length|pluralize }}</div>
+
+  {% for item in ranked_candidates %}
+  <div class="item-card">
+    <div style="width:100%;">
+      <h3>#{{ forloop.counter }} — {{ item.profile.full_name }}</h3>
+      <div class="meta">
+        <span>{{ item.application.job.title }}</span>
+        <span>{{ item.profile.experience_years }} yrs experience</span>
+        <span>Status: {{ item.application.get_status_display }}</span>
+      </div>
+      <div style="margin-top:10px;"><strong>ATS Score: {{ item.ats_score }}%</strong> · Match: {{ item.match.match_percentage }}%</div>
+
+      <div style="margin-top:10px;">
+        <strong>Matching:</strong>
+        {% for skill in item.match.matching_skills %}<span class="tag">{{ skill }}</span>{% empty %}<span class="meta">None</span>{% endfor %}
+      </div>
+      <div style="margin-top:8px;">
+        <strong>Missing:</strong>
+        {% for skill in item.match.missing_skills %}<span class="tag">{{ skill }}</span>{% empty %}<span class="meta">None</span>{% endfor %}
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="{% url 'view_candidate_profile' item.application.candidate.id %}" class="btn-small">Details</a>
+      {% if item.profile.resume %}<a href="{{ item.profile.resume.url }}" class="btn-small">Resume</a>{% endif %}
+      <form method="post" action="{% url 'job_applicants' item.application.job.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="application_id" value="{{ item.application.id }}">
+        <select name="status" onchange="this.form.submit()">
+          {% for value,label in status_choices %}
+            <option value="{{ value }}" {% if item.application.status == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+  </div>
+  {% empty %}
+    <div class="empty-state">No candidates match the current filters.</div>
+  {% endfor %}
+</div>
+{% endblock %}

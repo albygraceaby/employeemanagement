@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Ranked Applicants — {{ job.title }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Ranked applicants</h1>
+  <p>AI-ranked applicants for "{{ job.title }}", highest match first.</p>
+</div>
+
+<div class="section">
+  {% for item in ranked %}
+  <div class="item-card">
+    <div style="width:100%;">
+      <h3>#{{ forloop.counter }} — {{ item.profile.full_name }}</h3>
+      <div class="meta">
+        <span>Overall match: {{ item.result.overall_match }}%</span>
+        <span>{{ item.profile.experience_years }} yrs experience</span>
+        <span>Status: {{ item.application.get_status_display }}</span>
+      </div>
+      <div style="margin-top:8px;">
+        {% for skill in item.result.matching_skills %}<span class="tag">{{ skill }}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="actions">
+      <a href="{% url 'view_candidate_profile' item.application.candidate.id %}" class="btn-small">Profile</a>
+      <a href="{% url 'analyze_application' job.id item.application.id %}" class="btn-small btn-brass">Analyze</a>
+    </div>
+  </div>
+  {% empty %}
+    <div class="empty-state">No applicants with a completed profile yet.</div>
+  {% endfor %}
+</div>
+
+<div class="form-actions" style="margin-top:16px;">
+  <a href="{% url 'job_applicants' job.id %}" class="btn-small">Back to applicants</a>
+</div>
+{% endblock %}

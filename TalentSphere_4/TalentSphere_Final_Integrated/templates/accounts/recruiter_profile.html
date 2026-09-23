@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Recruiter Profile — TalentSphere Elevate{% endblock %}
+{% block page %}profile{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Recruiter profile</h1>
+  <p>Candidates and TalentSphere Elevate see this information when you post a job.</p>
+</div>
+
+<div class="form-card">
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="{{ form.full_name.id_for_label }}">Full name</label>
+        {{ form.full_name }}
+        <ul class="errorlist">{% for e in form.full_name.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+        <ul class="errorlist">{% for e in form.email.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.company_name.id_for_label }}">Company name</label>
+        {{ form.company_name }}
+        <ul class="errorlist">{% for e in form.company_name.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.designation.id_for_label }}">Your designation</label>
+        {{ form.designation }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.company_website.id_for_label }}">Company website</label>
+        {{ form.company_website }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.industry.id_for_label }}">Industry</label>
+        {{ form.industry }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.company_size.id_for_label }}">Company size</label>
+        {{ form.company_size }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.office_location.id_for_label }}">Office location</label>
+        {{ form.office_location }}
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.about_company.id_for_label }}">About the company</label>
+        {{ form.about_company }}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-small btn-brass">Save profile</button>
+      <a href="{% url 'dashboard' %}" class="btn-small">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

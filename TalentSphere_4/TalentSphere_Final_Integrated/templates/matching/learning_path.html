@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block title %}Skill Development Plan — {{ job.title }}{% endblock %}
+{% block page %}matching{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div class="match-eyebrow">TalentSphere Elevate · Skill Gap & Upskilling</div>
+  <h1>Skill Development Plan</h1>
+  <p>Personalised Learning Path designed to prepare you for <strong>{{ job.title }}</strong>.</p>
+</div>
+
+<!-- Overview Stats Banner -->
+<div class="roadmap-hero">
+  <div class="roadmap-hero-inner">
+    <div>
+      <span class="roadmap-hero-title">Target Role Overview</span>
+      <h2>{{ job.title }}</h2>
+      <p>{{ learning_path.missing_skill_count }} required skill{% if learning_path.missing_skill_count != 1 %}s{% endif %} identified for development</p>
+    </div>
+    <div class="roadmap-hero-stats">
+      <div class="stat-box">
+        <span class="val-cyan">~{{ learning_path.total_estimated_hours }}h</span>
+        <span class="lbl">Estimated Effort</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-box">
+        <span class="val-green">{{ learning_path.estimated_completion_weeks }} Wks</span>
+        <span class="lbl">Timeline (10h/wk)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Learning Path Modules per Missing Skill -->
+{% for roadmap in learning_path.roadmaps %}
+<div class="roadmap-module">
+  <!-- Module Header -->
+  <div class="roadmap-module-head">
+    <div>
+      <div class="roadmap-module-title-group">
+        <h3>Module {{ forloop.counter }}: {{ roadmap.skill_name }}</h3>
+        <span class="{% if roadmap.criticality == 'Critical Core' %}badge-critical{% else %}badge-normal{% endif %}">
+          {{ roadmap.criticality }}
+        </span>
+        <span class="badge-category">
+          {{ roadmap.category }}
+        </span>
+      </div>
+      <p class="roadmap-module-desc">{{ roadmap.description }}</p>
+    </div>
+    <div class="roadmap-module-meta">
+      <span class="roadmap-hours">Est. {{ roadmap.estimated_hours }} Hours</span>
+      <span class="roadmap-difficulty">{{ roadmap.difficulty }}</span>
+    </div>
+  </div>
+
+  <div class="roadmap-module-body">
+    <!-- Step-by-Step Milestones -->
+    <h4 class="timeline-section-title">Learning Milestones</h4>
+    <div class="timeline-grid">
+      {% for milestone in roadmap.milestones %}
+      <div class="timeline-card">
+        <span class="step-num">STEP 0{{ milestone.step }}</span>
+        <h5>{{ milestone.title }}</h5>
+        <p>{{ milestone.details }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Recommended Resources -->
+    <h4 class="timeline-section-title">Curated Resources</h4>
+    <div class="resource-list">
+      {% for res in roadmap.resources %}
+      <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer" class="resource-card">
+        <div class="resource-info">
+          <span class="resource-title">{{ res.title }}</span>
+        </div>
+        <div class="resource-actions">
+          <span class="badge-type">{{ res.type }}</span>
+          {% if res.free %}
+          <span class="badge-free">FREE</span>
+          {% endif %}
+          <span class="resource-open">View Resource</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    <!-- Portfolio Project Idea -->
+    {% if roadmap.project_idea %}
+    <div class="project-box">
+      <strong>Practical Application Project:</strong>
+      <p>{{ roadmap.project_idea }}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% empty %}
+<div class="roadmap-module" style="text-align:center; padding:36px 20px;">
+  <h3 style="color:var(--ok); font-family:var(--font-display); font-size:20px; margin:0 0 6px;">Skill Qualifications Verified</h3>
+  <p style="color:var(--text-mid); margin:0;">You already possess all required skills for {{ job.title }}. You are fully qualified to submit your application.</p>
+  <a href="{% url 'matching-home' %}" class="btn-small btn-brass" style="display:inline-block; margin-top:16px;">Back to Job Matches</a>
+</div>
+{% endfor %}
+
+<div class="form-actions" style="margin-top:24px; display:flex; gap:12px;">
+  <a href="{% url 'candidate_skill_gap' job.id %}" class="btn-small">Skill Gap Details</a>
+  <a href="{% url 'matching-home' %}" class="btn-small btn-brass">Back to Job Matches</a>
+</div>
+{% endblock %}
+
+

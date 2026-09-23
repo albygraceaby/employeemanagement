@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{% block title %}TalentSphere Elevate{% endblock %}</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" href="{% static 'css/app.css' %}" />
+</head>
+<body data-page="{% block page %}app{% endblock %}" class="app-body">
+
+{% if user.is_authenticated %}
+<nav class="topnav">
+  <a href="{% url 'landing' %}" class="topnav-brand" style="text-decoration: none; color: inherit;">
+    <div class="glyph">TE</div>
+    <span class="name">TalentSphere <b>Elevate</b></span>
+  </a>
+  <div class="topnav-links">
+    <a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+    {% if user.is_recruiter %}
+      <a href="{% url 'recruiter_jobs' %}" class="{% if request.resolver_match.url_name == 'recruiter_jobs' %}active{% endif %}">My Jobs</a>
+      <a href="{% url 'post_job' %}" class="{% if request.resolver_match.url_name == 'post_job' %}active{% endif %}">Post a Job</a>
+      <a href="{% url 'candidates_list' %}" class="{% if request.resolver_match.url_name == 'candidates_list' %}active{% endif %}">Candidates</a>
+      <a href="{% url 'matching-candidates' %}" class="{% if request.resolver_match.url_name == 'matching-candidates' %}active{% endif %}">Match Recommendations</a>
+      <a href="{% url 'interview_recruiter_dashboard' %}" class="{% if request.resolver_match.url_name == 'interview_recruiter_dashboard' %}active{% endif %}">Interviews</a>
+      <a href="{% url 'analytics' %}" class="{% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">Analytics</a>
+      <a href="{% url 'recruiter_metrics' %}" class="{% if request.resolver_match.url_name == 'recruiter_metrics' %}active{% endif %}">Recruiter Metrics</a>
+      <a href="{% url 'candidate_metrics' %}" class="{% if request.resolver_match.url_name == 'candidate_metrics' %}active{% endif %}">Candidate Metrics</a>
+    {% else %}
+      <a href="{% url 'job_list' %}" class="{% if request.resolver_match.url_name == 'job_list' %}active{% endif %}">Browse Jobs</a>
+      <a href="{% url 'interview_candidate_dashboard' %}" class="{% if request.resolver_match.url_name == 'interview_candidate_dashboard' %}active{% endif %}">My Interviews</a>
+      <a href="{% url 'analytics' %}" class="{% if request.resolver_match.url_name == 'analytics' %}active{% endif %}">Analytics</a>
+      <a href="{% url 'matching-home' %}" class="{% if request.resolver_match.url_name == 'matching-home' %}active{% endif %}">Job Matches</a>
+      <a href="{% url 'candidate_metrics' %}" class="{% if request.resolver_match.url_name == 'candidate_metrics' %}active{% endif %}">Candidate Metrics</a>
+    {% endif %}
+    <a href="{% url 'candidate_profile' %}" class="{% if request.resolver_match.url_name == 'candidate_profile' %}active{% endif %}">Profile</a>
+  </div>
+  <div class="topnav-user">
+    <span>{{ user.username }} <em>({{ user.role|title }})</em></span>
+    <a href="{% url 'logout' %}" class="btn-ghost">Log out</a>
+  </div>
+</nav>
+{% endif %}
+
+<main class="app-main">
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</main>
+
+</body>
+</html>

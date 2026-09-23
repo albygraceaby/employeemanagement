@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Apply — {{ job.title }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Apply to "{{ job.title }}"</h1>
+  <p>{{ job.recruiter.recruiter_profile.company_name|default:job.recruiter.username }} · {{ job.location }}</p>
+</div>
+
+<div class="tags" style="margin-bottom:16px;">
+  {% for skill in job.skills_list|slice:":10" %}<span class="tag">{{ skill }}</span>{% endfor %}
+</div>
+
+
+
+<div class="item-card" style="width:100%; margin-bottom:16px;">
+  <div style="width:100%;">
+    <h3>Your skill gap for this job</h3>
+    <p class="meta">
+      You currently match <strong>{{ skill_gap.match_percentage }}%</strong>
+      ({{ skill_gap.match_score }} of {{ skill_gap.required_skill_count }} identified skills).
+    </p>
+
+    <div style="margin-top:12px;">
+      <strong>Skills you have</strong><br>
+      {% for skill in skill_gap.matching_skills %}
+        <span class="tag">✓ {{ skill|title }}</span>
+      {% empty %}
+        <span class="meta">No matching skills identified yet.</span>
+      {% endfor %}
+    </div>
+
+    <div style="margin-top:12px;">
+      <strong>Skills missing</strong><br>
+      {% for skill in skill_gap.missing_skills %}
+        <span class="tag">⚠ {{ skill|title }}</span>
+      {% empty %}
+        <span class="meta">None — your profile matches all identified job skills.</span>
+      {% endfor %}
+    </div>
+
+    <p class="meta" style="margin-top:12px;">
+      This analysis uses the job description, responsibilities and skills field,
+      compared with the skills in your candidate profile/resume.
+    </p>
+  </div>
+</div>
+
+<div class="form-card">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-field full">
+        <label for="{{ form.cover_note.id_for_label }}">Cover note (optional)</label>
+        {{ form.cover_note }}
+        <ul class="errorlist">{% for e in form.cover_note.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-small btn-brass">Submit application</button>
+      <a href="{% url 'job_list' %}" class="btn-small">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

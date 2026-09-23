@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Browse Jobs — TalentSphere Elevate{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Open job openings</h1>
+  <p>Apply to roles that match your skills — recruiters will see your full profile.</p>
+</div>
+
+{% for job in jobs %}
+  <div class="item-card">
+    <div>
+      <h3>{{ job.title }}</h3>
+      <div class="meta">
+        <span>{{ job.recruiter.recruiter_profile.company_name|default:job.recruiter.username }}</span>
+        <span>{{ job.location }}</span>
+        <span>{{ job.get_job_type_display }}</span>
+        {% if job.experience_required %}<span>{{ job.experience_required }}</span>{% endif %}
+      </div>
+      <div class="tags">
+        {% for skill in job.skills_list|slice:":8" %}<span class="tag">{{ skill }}</span>{% endfor %}
+      </div>
+    </div>
+    <div class="actions">
+      {% if job.id in applied_job_ids %}
+        <span class="badge badge-applied">Applied</span>
+      {% else %}
+        <a href="{% url 'apply_job' job.id %}" class="btn-small btn-brass">Apply now</a>
+      {% endif %}
+    </div>
+  </div>
+{% empty %}
+  <div class="empty-state">No open job openings right now — check back soon.</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Post a Job — TalentSphere Elevate{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Post a job</h1>
+  <p>Candidates matching these requirements will be able to apply directly.</p>
+</div>
+
+<div class="form-card">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="form-grid">
+      <div class="form-field full">
+        <label for="{{ form.title.id_for_label }}">Job title</label>
+        {{ form.title }}
+        <ul class="errorlist">{% for e in form.title.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.description.id_for_label }}">Job description</label>
+        {{ form.description }}
+        <ul class="errorlist">{% for e in form.description.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.responsibilities.id_for_label }}">Key responsibilities</label>
+        {{ form.responsibilities }}
+      </div>
+      <div class="form-field full">
+        <label for="{{ form.skills_required.id_for_label }}">Skills required</label>
+        {{ form.skills_required }}
+        <ul class="errorlist">{% for e in form.skills_required.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+      </div>
+      <div class="form-field">
+        <label for="{{ form.location.id_for_label }}">Location</label>
+        {{ form.location }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.job_type.id_for_label }}">Job type</label>
+        {{ form.job_type }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.experience_required.id_for_label }}">Experience required</label>
+        {{ form.experience_required }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.openings.id_for_label }}">Number of openings</label>
+        {{ form.openings }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.salary_min.id_for_label }}">Minimum salary</label>
+        {{ form.salary_min }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.salary_max.id_for_label }}">Maximum salary</label>
+        {{ form.salary_max }}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.is_active.id_for_label }}">Active (visible to candidates)</label>
+        {{ form.is_active }}
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-small btn-brass">Post job</button>
+      <a href="{% url 'recruiter_jobs' %}" class="btn-small">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

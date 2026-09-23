@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}AI Analysis — {{ application.candidate.candidate_profile.full_name }}{% endblock %}
+{% block page %}jobs{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>AI match analysis</h1>
+  <p>{{ application.candidate.candidate_profile.full_name }} for "{{ application.job.title }}"</p>
+</div>
+
+<div class="item-card" style="width:100%;">
+  <div style="width:100%;">
+    <h3>Overall match: {{ result.overall_match }}%</h3>
+    <p class="meta">{{ application.ai_recommendation }}</p>
+
+    <div style="margin-top:14px; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px;">
+      <div><strong>Skill match</strong><br>{{ result.skill_match }}%</div>
+      <div><strong>Experience match</strong><br>{{ result.experience_match }}%</div>
+      <div><strong>Keyword relevance</strong><br>{{ result.keyword_match }}%</div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <strong>Matching skills:</strong><br>
+      {% for skill in result.matching_skills %}<span class="tag">{{ skill }}</span>{% empty %}<span class="meta">None</span>{% endfor %}
+    </div>
+    <div style="margin-top:10px;">
+      <strong>Missing skills:</strong><br>
+      {% for skill in result.missing_skills %}<span class="tag">{{ skill }}</span>{% empty %}<span class="meta">None</span>{% endfor %}
+    </div>
+
+    <p class="meta" style="margin-top:14px;">Analyzed {{ application.analyzed_at|date:"M j, Y H:i" }}</p>
+  </div>
+</div>
+
+<div class="form-actions" style="margin-top:16px;">
+  <a href="{% url 'job_applicants' application.job.id %}" class="btn-small">Back to applicants</a>
+  {% if profile.resume %}<a href="{{ profile.resume.url }}" class="btn-small">View resume</a>{% endif %}
+  <a href="{% url 'view_candidate_profile' application.candidate.id %}" class="btn-small">Full profile</a>
+</div>
+{% endblock %}
